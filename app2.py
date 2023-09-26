@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from uuid import UUID
-import random
+import random, json
 
 app = FastAPI()
 
@@ -38,6 +38,19 @@ class createUser(login):
     account_balance: float = 0.0
 
 database: dict[str, createUser] = {}
+# myjson = database.json()
+
+# filename = 'data/database.json'
+
+# def save_to_database(database):
+#     with open(filename, 'a') as file:
+#         json.dump(myjson, file, indent=4)
+#         pass
+        
+# def read_from_database():
+#     with open(myjson, 'r') as file:
+#         data = json.load(file)
+#         return data
 
 #function to create 10 digits number where the first 3-digit is can be controlled
 def gen_account_number():
@@ -84,6 +97,7 @@ async def Sign_up(user_in: login):
     
     #save new user information in database and hashed under account number
     database[new_user.account_num] = new_user
+    # save_to_database(database)
     
     return {"message": "Saved in database DB successfully", "Data" : new_user}
 
@@ -129,7 +143,7 @@ def Update_profile(account_num:str, data_in:UserEdit):
     target.Address = data_in.Address
     
     return {"Message": "Profile updated Successfully!!!",
-            "data" : target}
+        "data" : target}
 
 #route to update password
 @app.put("/users/profile/ChangePassword/{account_num}")
@@ -158,7 +172,8 @@ def delete_User(account_num:str, password_in):
     if target.password != password_in:
         return {"message":"password incorrect, Try again"}
     
-    del target.account_num
+    del database[target.accounts_num]
+    
     return {"message": "User Deleted Successfully!!!"}
 
 @app.put("/user/deposit/{account_num}")
@@ -198,4 +213,40 @@ def Withdrawal(account_num:str, password_in:str, amount: float):
             "Amount Withdrawn": amount,
             "Bank Charges" : charges,
             "Available Balance is": newbalance
+            }
+@app.put("/users/signin/transfer")
+def transfer(sender_account:str, recipient_account:str, password_in:str, amount:float):
+    sender = database.get(str(sender_account))
+    recipient = database.get(str(recipient_account))
+    
+    if not sender:
+        return {"message":"Enter a correct Account Number and Password"}
+    if not recipient:
+        return {"message":"Enter a correct Account Number and Password"}
+    if sender.password != password_in:
+        return {"message":"password incorrect, Try again"}
+    
+    #add bank charges to transaction
+    if amount <= 5000:
+        charges = 10.75
+    elif amount > 5000 and amount <= 50000:
+        charges = 26.88
+    else: charges = 53.75
+    #calculate total deductable
+    payable = amount + float(charges)
+    
+    if sender.account_balance < payable:
+        return {"message": "Insufficient funds!!!"}
+    
+    #Debit Action
+    sender.account_balance -= payable
+    #Action Credit
+    recipient.account_balance += amount
+    
+    return {"message": "Transaction Successful!!!",
+            "sender": sender.username,
+            "recipient": recipient.username,
+            "amount": "NGN {:,.2f}".format(amount),
+            "Bank Deduction": "NGN {:,.2f}".format(charges),
+            "Available balance is": "NGN {:,.2f}".format(sender.account_balance)
             }

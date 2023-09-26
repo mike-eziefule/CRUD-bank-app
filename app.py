@@ -79,4 +79,3 @@
 # def information():
 #     print("PROFILE PAGE")
 #     return
-
