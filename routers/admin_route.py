@@ -103,11 +103,11 @@ async def reset_pwd(account_num:int, input:Reset, db:Session = Depends(UserServi
             detail="New password is does not match"
         )
         
-    if db.query(User).filter(User.email == input.email):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, 
-            detail="Email already in use"
-        )
+    # if db.query(User).filter(User.email == input.email):
+    #     raise HTTPException(
+    #         status_code=status.HTTP_401_UNAUTHORIZED, 
+    #         detail="Email already in use"
+    #     )
     
     #authentication 
     if user.id == 1:

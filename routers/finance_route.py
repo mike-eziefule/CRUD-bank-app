@@ -152,31 +152,49 @@ async def Cash_Withdrawal(amount:float, sender_acct_no:str, input:Withdrawal, db
 
 #intrabank Transfer, users only
 @finance_router.put("/transfer/{amount}")
-async def Transfer(amount:float, reciever_acct_no:int, input:Withdrawal, db:Session = Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
+async def Transfer(amount:float, reciever_acct_no:int, password:str, input:Withdrawal, db:Session = Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
 
     user = await UserService.decode_token(db, token)
-
-    #verify reciepient account is admin and active
+    
+    #verify and set sending accont
+    sending_acct = db.query(User).filter(User.id == user.id)
+    #verify and set reciever account
     recipient_user = db.query(User).filter(User.account_num == reciever_acct_no)
-    if not recipient_user.first():
+
+    #verify if entered password is correct
+    if password != user.password:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,  
-            detail= 'RECIEPIENT ACCOUNT NOT FOUND'
+            status_code=status.HTTP_401_UNAUTHORIZED,  
+            detail= 'PASSWORD IS INCORRECT'
+        )
+    
+    #verify if sending account is active
+    if sending_acct.first().status != "ACTIVE":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,  
+            detail= 'YOUR ACCOUNT HAS BEEN DISABLED'
         )
     
     #verify sender/deductable account has enough money
-    sending_acct = db.query(User).filter(User.account_num == user.account_num and User.status =="ACTIVE")
     if sending_acct.first().current_balance < amount:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, 
-            detail= 'INSUFFICIENT FUNDS OR INACTIVE'
-        )  
-    else: #deduct sending account
-        sending_acct.update({User.current_balance : User.current_balance - amount})                                      #Alternatively
+            detail= 'INSUFFICIENT FUNDS!!!'
+        )
+    else:   #deduct sending account
+        sending_acct.update({User.current_balance : User.current_balance - amount})                                    #Alternatively
         db.commit()
+    
+    #verify reciepients account number
+    if not recipient_user.first():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,  
+            detail= 'ACCOUNT NUMBER IS INCORRECT'
+        )
     
     #verify recipient_user is active
     if recipient_user.first().status != "ACTIVE":
+        #initiate reversal
         sending_acct.update({User.current_balance : User.current_balance + amount})                                      #Alternatively
         db.commit()
         raise HTTPException(
@@ -184,6 +202,7 @@ async def Transfer(amount:float, reciever_acct_no:int, input:Withdrawal, db:Sess
             detail= 'RECIPIENT ACCOUNT IS INACTIVE'
         )
     else:
+        #credit reciepient
         recipient_user.update({User.current_balance : User.current_balance + amount})                                      #Alternatively
         db.commit()
         return {'message':'Transfer successful!!!',

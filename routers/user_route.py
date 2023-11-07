@@ -64,57 +64,44 @@ async def create_token(form_data: OAuth2PasswordRequestForm = Depends(), db:Sess
         detail="invalid credentials"
         )
 
-#ROUTE TO CHANGE LOGIN PASSWORD for users
-@user_router.put("/change_pwd/{account_num}")
-async def Change_pwd(account_num:int, input:Edit_Pwd, db:Session = Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
+#ROUTE TO CHANGE PASSWORD for logged in users
+@user_router.put("/change_pwd/{password}")
+async def Change_pwd(password:str, input:Edit_Pwd, db:Session = Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
     
     user = await UserService.decode_token(db, token)
     
-    existing_user = db.query(User).filter(User.account_num==account_num)
-    if not existing_user.first():
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, 
-            detail="ACCOUNT NOT FOUND"
-        )
+    existing_user = db.query(User).filter(User.id==user.id)
 
     if input.new_password != input.new_password_again:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, 
             detail="New password is does not match"
         )
-    
     #authentication 
-    if existing_user.first().account_num == user.account_num:
+    if existing_user.first().password == password:
         
         existing_user.update({User.password : input.new_password})                                       #Alternatively
         db.commit()
-
         raise HTTPException(
             status_code=status.HTTP_202_ACCEPTED, 
-            detail='Information updated successfully'
+            detail='Password changed successfully'
         )
-
     raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, 
-            detail= 'User Information can ONLY be edited by Owner'
+            detail= 'Old Password is incorrect, contact the administrator'
         )
 
 
 #EDITING USER INFORMATION BY User ONLY
-@user_router.put("/update/{account_num}")
-async def Update_Profile(account_num:int, input:Update, db:Session = Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
+@user_router.put("/update/{password}",)
+async def Update_Profile(password:str, input:Update, db:Session = Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
 
     #authentication
     user = await UserService.decode_token(db, token)
     
-    existing_user = db.query(User).filter(User.account_num==account_num)
-    if not existing_user.first():
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, 
-            detail=f"User with:{account_num} not found"
-        )
+    existing_user = db.query(User).filter(User.id==user.id).first()
     
-    if existing_user.first().account_num == user.account_num:
+    if existing_user.password == password:
         # db update reqires a dict input but input:BlogCreate is a pydantic model hence the use of jsonable encoder to convert it
         # existing_article = existing_article.update(jsonable_encoder(input))  
         existing_user.update(input.__dict__)                    #Alternatively
@@ -126,5 +113,5 @@ async def Update_Profile(account_num:int, input:Update, db:Session = Depends(Use
 
     raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, 
-            detail= 'User Information can only be EDITED by Owner'
+            detail= 'Password is incorrect, contact the administrator'
         )
