@@ -138,9 +138,7 @@ async def Delete_account(account_num:int, db:Session=Depends(UserService.get_db)
         )
     
     if user.id == 1:
-        # db update reqires a dict input but input:BlogCreate is a pydantic model hence the use of jsonable encoder to convert it
-        # existing_article = existing_article.update(jsonable_encoder(input))  
-        existing_user.delete()                   #Alternatively
+        existing_user.delete()
         db.commit()
         raise HTTPException(
             status_code=status.HTTP_202_ACCEPTED, 
@@ -151,3 +149,33 @@ async def Delete_account(account_num:int, db:Session=Depends(UserService.get_db)
             status_code=status.HTTP_403_FORBIDDEN, 
             detail= 'Admins permission required'
         )
+    
+    #admin view aLL articles
+@admin_router.delete('/delete_all')
+async def Delete_all_account(password:str, db:Session=Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
+    
+    #authentication
+    user =await  UserService.decode_token(db, token)
+    
+    all_user = db.query(User).all()
+    
+    if not user.id == 1:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail= "Admin permission required"
+        )
+        
+    if password == user.password:
+        for user in all_user:
+            if user.id == 1:
+                continue
+            print(user)
+            db.delete(user)
+            db.commit()
+        db.close()
+        return {"message": "All Accounts have been deleted"}
+    else: raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED, 
+        detail= "INCORRECT PASSWORD"
+    )
+    

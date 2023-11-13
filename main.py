@@ -27,10 +27,3 @@ app = FastAPI(
 app.include_router(admin_router, prefix="/admin", tags= ["Admin"])
 app.include_router(user_router, prefix="/user", tags=["Users"])
 app.include_router(finance_router, prefix="/finance", tags = ["Transactions"])
-
-
-# #view aLL articles
-# @app.get('/view')
-# async def get_all_articles(db:Session=Depends(UserService.get_db)):
-#     all_Users = db.query(User).all()
-#     return all_Users
