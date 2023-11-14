@@ -4,10 +4,10 @@ from uuid import UUID
 
 
 class Log(BaseModel):
-    description: str = None
+    description: str = 'Over the counter cash withdrawal'
     
 class Withdrawal(Log):
-    title:str = "Cash withdrawal"
+    title:str = "Withdrawal"
     
 class deposit(Log):
     title:str = "Cash deposit"

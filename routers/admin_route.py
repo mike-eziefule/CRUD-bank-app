@@ -69,8 +69,6 @@ async def admin_Update_Profile(account_num:int, input:UpdateAdmin, db:Session = 
         )
     
     if  user.id == 1:
-        # db update reqires a dict input but input:BlogCreate is a pydantic model hence the use of jsonable encoder to convert it
-        # existing_article = existing_article.update(jsonable_encoder(input))  
         existing_user.update(input.__dict__)                    #Alternatively
         db.commit()
         raise HTTPException(
@@ -169,7 +167,6 @@ async def Delete_all_account(password:str, db:Session=Depends(UserService.get_db
         for user in all_user:
             if user.id == 1:
                 continue
-            print(user)
             db.delete(user)
             db.commit()
         db.close()

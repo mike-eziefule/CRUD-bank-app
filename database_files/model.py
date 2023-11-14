@@ -1,5 +1,5 @@
 from database_files.engine import Base
-from sqlalchemy import Column, ForeignKey, Integer, String, Date, Float, Uuid, DateTime
+from sqlalchemy import Column, ForeignKey, Integer, String, Date, Float, DateTime, Uuid
 from sqlalchemy.orm import relationship
 
 
@@ -28,11 +28,11 @@ class Log(Base):
     __tablename__ = 'LOG'
     
     id = Column(Integer, primary_key=True, index = True)
-    trans_id= Column(Uuid, index = True, nullable= False)
+    trans_id= Column(Uuid, unique= True, nullable= False)
     date_initiated = Column(DateTime, nullable= False)
     title = Column(String, nullable= False)
-    sender_acct_no = Column(String, unique=True, nullable= False)
-    reciever_acct_no = Column(String, unique=True, nullable= False)
+    sender_acct_no = Column(String, nullable= False)
+    reciever_acct_no = Column(String, nullable= False)
     description = Column(String(120), nullable= False)
     amount = Column(Float, nullable= False)
     status = Column(String, default= "SUCCESS")

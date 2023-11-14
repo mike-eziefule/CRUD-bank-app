@@ -1,13 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-# from schemas.user_schema import CreateUser, displayable
 from schemas.finance_schema import deposit, Withdrawal
 from services.user_service import UserService
 from database_files.model import Log, User
 from sqlalchemy.orm import Session
 from routers.user_route import oauth2_scheme
-from sqlalchemy import func
 
-from uuid import UUID
+import uuid
 from datetime import datetime
 
 finance_router = APIRouter()
@@ -25,6 +23,22 @@ async def Check_Balance(db:Session = Depends(UserService.get_db), token:str=Depe
     existing_user = db.query(User).filter(User.account_num == user.account_num)
     
     if existing_user.first():
+        
+        # save Log database
+        new_log = Log(
+            trans_id = uuid.uuid4(),
+            date_initiated = datetime.now(),
+            amount = existing_user.first().current_balance,
+            sender_acct_no = 'not applicable',
+            reciever_acct_no = existing_user.first().account_num,
+            owner_id = user.id,
+            status = "SUCCESSFUL",
+            title = "Enquiry",
+            description = "Balance enquiry initiated"
+        )  
+        db.add(new_log)
+        db.commit()
+        db.refresh(new_log)
         
         return { "Welcome ": user.username,
                 "Your Account Balance is": " NGN {:,.2f}".format(existing_user.first().current_balance) 
@@ -76,26 +90,27 @@ async def Cash_Deposit(amount:float, reciever_acct_no:int, input:deposit, db:Ses
     else:
         recipient_user.update({User.current_balance : User.current_balance + amount})                                      #Alternatively
         db.commit()
-
-    
-    # new_log = Log(trans_id = UUID(int(length + 1)),
-    #                 date_initiated = datetime.now(),
-    #                 amount = amount,
-    #                 sender = user.username,
-    #                 owner_id = user.id,
-    #                 **input.__dict__
-    # )
-    
-    # # save to database
-    # db.add(new_log)
-    # db.commit()
-    # db.refresh(new_log)
+            
+        # save Log database
+        new_log = Log(
+            trans_id = uuid.uuid4(),
+            date_initiated = datetime.now(),
+            amount = amount,
+            sender_acct_no = sending_acct.first().account_num,
+            reciever_acct_no = recipient_user.first().account_num,
+            owner_id = user.id,
+            status = "SUCCESSFUL",
+            **input.__dict__
+        )  
+        db.add(new_log)
+        db.commit()
+        db.refresh(new_log)
     
         return {'message':'Deposit successful!!!',
                 'Amount Deposited:':" NGN {:,.2f}".format(amount),
                 'recipient Account:':recipient_user.first().account_num,
                 'recipient Name:':recipient_user.first().firstname + ' ' + recipient_user.first().lastname
-    }
+        }
 
 #over the counter withdrawal, admin only
 @finance_router.put("/Withdrawal/{amount}")
@@ -139,6 +154,21 @@ async def Cash_Withdrawal(amount:float, sender_acct_no:str, input:Withdrawal, db
     else:
         recipient_user.update({User.current_balance : User.current_balance + amount})                                      #Alternatively
         db.commit()
+        
+        # save Log database
+        new_log = Log(
+            trans_id = uuid.uuid4(),
+            date_initiated = datetime.now(),
+            amount = amount,
+            sender_acct_no = sending_acct.first().account_num,
+            reciever_acct_no = recipient_user.first().account_num,
+            owner_id = user.id,
+            status = "SUCCESSFUL",
+            **input.__dict__
+        )  
+        db.add(new_log)
+        db.commit()
+        db.refresh(new_log)
     
         return {'message':'Withdrawal successful!!!',
                 'Amount Withdrawn:':" NGN {:,.2f}".format(amount),
@@ -205,6 +235,21 @@ async def Transfer(amount:float, reciever_acct_no:int, password:str, input:Withd
         #credit reciepient
         recipient_user.update({User.current_balance : User.current_balance + amount})                                      #Alternatively
         db.commit()
+        
+        new_log = Log(
+            trans_id = uuid.uuid4(),
+            date_initiated = datetime.now(),
+            amount = amount,
+            sender_acct_no = sending_acct.first().account_num,
+            reciever_acct_no = recipient_user.first().account_num,
+            owner_id = user.id,
+            status = "SUCCESSFUL",
+            **input.__dict__
+        )  
+        db.add(new_log)
+        db.commit()
+        db.refresh(new_log)
+        
         return {'message':'Transfer successful!!!',
                 'Amount Withdrawn:':" NGN {:,.2f}".format(amount),
                 'Receiving Account:':recipient_user.first().account_num,
