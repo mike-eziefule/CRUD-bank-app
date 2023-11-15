@@ -28,14 +28,14 @@ class Log(Base):
     __tablename__ = 'LOG'
     
     id = Column(Integer, primary_key=True, index = True)
+    status = Column(String, default= "SUCCESS")
     trans_id= Column(Uuid, unique= True, nullable= False)
     date_initiated = Column(DateTime, nullable= False)
     title = Column(String, nullable= False)
+    description = Column(String(120), nullable= False)
     sender_acct_no = Column(String, nullable= False)
     reciever_acct_no = Column(String, nullable= False)
-    description = Column(String(120), nullable= False)
     amount = Column(Float, nullable= False)
-    status = Column(String, default= "SUCCESS")
     
     owner_id = Column(Integer, ForeignKey("USER.id"))
     owner = relationship("User", back_populates = "transactions")

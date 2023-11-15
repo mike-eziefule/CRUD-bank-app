@@ -2,11 +2,9 @@ from fastapi import FastAPI, Depends
 from core.config import setting
 from schemas.user_schema import displayable
 from database_files.engine import engine, Base
-
 from routers.admin_route import admin_router
 from routers.user_route import user_router
 from routers.finance_route import finance_router
-# from routers.finance_route import finance_router
 from services.user_service import UserService
 from database_files.model import User
 from sqlalchemy.orm import Session
