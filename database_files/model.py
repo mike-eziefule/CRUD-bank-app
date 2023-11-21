@@ -17,7 +17,7 @@ class User(Base):
     password = Column(String, nullable= False)
     telephone = Column(String, nullable= False)
     gender = Column(String, nullable= False)
-    account_num = Column(Integer, unique=True, nullable= False)
+    account_num = Column(String, unique=True, nullable= False)
     current_balance = Column(Float, nullable= False)
     status = Column(String, default= "ACTIVE")
     

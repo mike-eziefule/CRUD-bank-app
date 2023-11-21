@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from schemas.finance_schema import deposit, Withdrawal
+from schemas.finance_schema import Transfer
 from services.user_service import UserService
 from database_files.model import Log, User
 from sqlalchemy.orm import Session
@@ -9,10 +9,6 @@ import uuid
 from datetime import datetime
 
 finance_router = APIRouter()
-
-@finance_router.get("/")
-def get_log():
-    return "logs"
 
 #A route to check balance by logged in users ONLY
 @finance_router.get("/balance")
@@ -49,140 +45,10 @@ async def Check_Balance(db:Session = Depends(UserService.get_db), token:str=Depe
             detail="ACCOUNT NOT FOUND"
         )
 
-#over the counter deposit, admin only
-@finance_router.put("/Cash_deposit/{amount}")
-async def Cash_Deposit(amount:float, reciever_acct_no:int, input:deposit, db:Session = Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
-
-    user = await UserService.decode_token(db, token)
-    
-    #verify admin status
-    if user.id is not 1:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, 
-            detail= 'Admin permission required'
-        )
-    #verify reciepient account
-    recipient_user = db.query(User).filter(User.account_num == reciever_acct_no)
-    if not recipient_user.first():
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, 
-            detail= 'RECIEPIENT ACCOUNT NOT FOUND'
-        )
-    
-    sending_acct = db.query(User).filter(User.id == 1)
-    if sending_acct.first().current_balance < amount:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, 
-            detail= 'INSUFFICIENT FUNDS'
-        )  
-    else:
-        sending_acct.update({User.current_balance : User.current_balance - amount})                                      #Alternatively
-        db.commit()
-    
-    if recipient_user.first().status != "ACTIVE":
-        #initiate reversal
-        sending_acct.update({User.current_balance : User.current_balance + amount})                                      #Alternatively
-        db.commit()
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, 
-            detail= 'RECIPIENT INACTIVE'
-        )
-    else:
-        recipient_user.update({User.current_balance : User.current_balance + amount})                                      #Alternatively
-        db.commit()
-            
-        # save Log database
-        new_log = Log(
-            trans_id = uuid.uuid4(),
-            date_initiated = datetime.now(),
-            amount = amount,
-            sender_acct_no = sending_acct.first().account_num,
-            reciever_acct_no = recipient_user.first().account_num,
-            owner_id = user.id,
-            status = "SUCCESSFUL",
-            **input.__dict__
-        )  
-        db.add(new_log)
-        db.commit()
-        db.refresh(new_log)
-    
-        return {'message':'Deposit successful!!!',
-                'Amount Deposited:':" NGN {:,.2f}".format(amount),
-                'recipient Account:':recipient_user.first().account_num,
-                'recipient Name:':recipient_user.first().firstname + ' ' + recipient_user.first().lastname
-        }
-
-#over the counter withdrawal, admin only
-@finance_router.put("/Withdrawal/{amount}")
-async def Cash_Withdrawal(amount:float, sender_acct_no:str, input:Withdrawal, db:Session = Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
-
-    user = await UserService.decode_token(db, token)
-    
-    #verify admin status
-    if user.id is not 1:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, 
-            detail= 'Admin permission required'
-        )
-    #verify reciepient account is admin and active
-    recipient_user = db.query(User).filter(User.id == 1)
-    if not recipient_user.first():
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,  
-            detail= 'RECIEPIENT ACCOUNT NOT FOUND'
-        )
-    
-    #verify sender/deductable account has enough money
-    sending_acct = db.query(User).filter(User.account_num == sender_acct_no)
-    if sending_acct.first().current_balance < amount:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, 
-            detail= 'INSUFFICIENT FUNDS'
-        )  
-    else: #deduct sending account
-        sending_acct.update({User.current_balance : User.current_balance - amount})                                      #Alternatively
-        db.commit()
-    
-    #verify recipient_user is active
-    if recipient_user.first().status != "ACTIVE":
-        sending_acct.update({User.current_balance : User.current_balance + amount})                                      #Alternatively
-        db.commit()
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, 
-            detail= 'RECIPIENT ACCOUNT IS INACTIVE'
-        )
-    else:
-        recipient_user.update({User.current_balance : User.current_balance + amount})                                      #Alternatively
-        db.commit()
-        
-        # save Log database
-        new_log = Log(
-            trans_id = uuid.uuid4(),
-            date_initiated = datetime.now(),
-            amount = amount,
-            sender_acct_no = sending_acct.first().account_num,
-            reciever_acct_no = recipient_user.first().account_num,
-            owner_id = user.id,
-            status = "SUCCESSFUL",
-            **input.__dict__
-        )  
-        db.add(new_log)
-        db.commit()
-        db.refresh(new_log)
-    
-        return {'message':'Withdrawal successful!!!',
-                'Amount Withdrawn:':" NGN {:,.2f}".format(amount),
-                'Customer Account:':sending_acct.first().account_num,
-                'Customer Name:':sending_acct.first().firstname + ' ' + sending_acct.first().lastname
-        }
-
-
-
-
 
 #intrabank Transfer, users only
 @finance_router.put("/transfer/{amount}")
-async def Transfer(amount:float, reciever_acct_no:int, password:str, input:Withdrawal, db:Session = Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
+async def Transfer(amount:float, reciever_acct_no:int, password:str, input:Transfer, db:Session = Depends(UserService.get_db), token:str=Depends(oauth2_scheme)):
 
     user = await UserService.decode_token(db, token)
     

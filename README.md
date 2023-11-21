@@ -75,7 +75,7 @@
 <!-- About the Blog. -->
 ## About Ezzy Bank
 
-Ezzy Bank is a cutting-edge fintech API, crafted with precision using FastAPI and Python. Empowering seamless finincial transactions,
+Ezzy Bank is a cutting-edge fintech API, crafted with precision using FastAPI and Python. Empowering seamless financial transactions,
 secure data handling, and rapid integration. Our API is designed to elivate your fintech solutions to new heights. Experiencing efficiency
 and reliability at its core as you embark on a finincial journey of unparalleled financial innovation with our robust FASTAPI-powered platform.
 
@@ -123,7 +123,7 @@ and reliability at its core as you embark on a finincial journey of unparalleled
 
 ---
 
-Ezzy Bank was built by <a href="https://github.com/mike-eziefule/">Eziefule Michael</a>, a Backend Engineering student at <a href="https://engineering.altschoolafrica.com/">AltSchool Africa</a> who's learning to create magic with the Python FastAPI framework.
+Ezzy Bank was built by <a href="https://github.com/mike-eziefule/" target="_blank">Eziefule Michael</a>, a Backend Engineering student at <a href="https://engineering.altschoolafrica.com/" target="_blank">AltSchool Africa</a> who's learning to create magic with the Python FastAPI framework.
 
 A tutorial on how this project was built is available in [Michael_Ezzy's Space](https://hashnode.com/draft/6539339dbe20a1000f0b5edd) on Hashnode.
 
@@ -168,9 +168,9 @@ Python3: [Get Python](https://www.python.org/downloads/)
 
 1. Clone this repo
    ```sh
-   git clone https://github.com/mike-eziefule/Ezzy_Blog_api.git
+   git clone https://github.com/mike-eziefule/CRUD-bank-app.git
    ```
-2. Activate the virtual environment
+2. Activate the virtual environment(git bash on Windows)
    ```sh
    source virtual/Scripts/activate
    ```
@@ -215,7 +215,7 @@ Python3: [Get Python](https://www.python.org/downloads/)
 <!-- License -->
 ## License
 
-Distributed under the MIT License. See <a href="https://github.com/mike-eziefule/Ezzy_Blog_api/blob/main/LICENSE">LICENSE</a> for more information.
+Distributed under the MIT License. See <a href="https://github.com/mike-eziefule/CRUD-bank-app/blob/main/LICENSE">LICENSE</a> for more information.
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
@@ -226,7 +226,7 @@ Distributed under the MIT License. See <a href="https://github.com/mike-eziefule
 
 X [Formally Twitter] - [@EziefuleMichael](https://twitter.com/EziefuleMichael)
 
-Project Link: [Ezzy_Blog_api](https://github.com/mike-eziefule/Ezzy_Blog_api)
+Project Link: [Ezzy_Blog_api](https://github.com/mike-eziefule/CRUD-bank-app)
 
 Email Address: [mike.eziefule@gmail.com](mailto:mike-eziefule@gmail.com)
 
@@ -239,7 +239,7 @@ Email Address: [mike.eziefule@gmail.com](mailto:mike-eziefule@gmail.com)
 
 This project was made possible by:
 
-* [AltSchool Africa School of Engineering](https://altschoolafrica.com/schools/engineering)
+* [AltSchool Africa School of Engineering](https://engineering.altschoolafrica.com/)
 * [Caleb Emelike's FastAAPI Lessons](https://github.com/CalebEmelike)
 * [GitHub Student Pack](https://education.github.com/globalcampus/student)
 * [Canva](https://www.canva.com/)
@@ -250,16 +250,16 @@ This project was made possible by:
 ---
 
 <!-- Markdown Links & Images -->
-[contributors-shield]: https://img.shields.io/github/contributors/mike-eziefule/Ezzy_Blog_api
-[contributors-url]: https://github.com/mike-eziefule/Ezzy_Blog_api/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/mike-eziefule/Ezzy_Blog_api
-[forks-url]: https://github.com/mike-eziefule/Ezzy_Blog_api/network/members
-[stars-shield]: https://img.shields.io/github/stars/mike-eziefule/Ezzy_Blog_api
-[stars-url]: https://github.com/mike-eziefule/Ezzy_Blog_api/stargazers
-[issues-shield]: https://img.shields.io/github/issues/mike-eziefule/Ezzy_Blog_api
-[issues-url]: https://github.com/mike-eziefule/Ezzy_Blog_api/issues
-[license-shield]: https://img.shields.io/github/license/mike-eziefule/Ezzy_Blog_api
-[license-url]: https://github.com/mike-eziefule/Ezzy_Blog_api/blob/main/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/mike-eziefule/CRUD-bank-app
+[contributors-url]: https://github.com/mike-eziefule/CRUD-bank-app/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/mike-eziefule/CRUD-bank-app
+[forks-url]: https://github.com/mike-eziefule/CRUD-bank-app/network/members
+[stars-shield]: https://img.shields.io/github/stars/mike-eziefule/CRUD-bank-app
+[stars-url]: https://github.com/mike-eziefule/CRUD-bank-app/stargazers
+[issues-shield]: https://img.shields.io/github/issues/mike-eziefule/CRUD-bank-app
+[issues-url]: https://github.com/mike-eziefule/CRUD-bank-app/issues
+[license-shield]: https://img.shields.io/github/license/mike-eziefule/CRUD-bank-app
+[license-url]: https://github.com/mike-eziefule/CRUD-bank-app/blob/main/LICENSE
 [twitter-shield]: https://img.shields.io/twitter/follow/EziefuleMichael
 [twitter-url]: https://twitter.com/EziefuleMichael
 [Ezzy-blog-screenshot-pg1]:images/ezzy_blogpage1.png

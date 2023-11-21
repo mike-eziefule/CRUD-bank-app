@@ -20,15 +20,11 @@ class Settings:
     DESCRIPTION = """ ### OVERVIEW 
 #### Welcome to my banking simulation api.
 
-* The fundamental concept is that anyone visiting the blog should be able to:
-    * create an account, login and log out at will,
-    * read blog posts written by them and/or other user,
-    * create, edit and delete blog entries created by them but restricted from modifying or deleting posts from others users.
-* perform authentication where a user credentials is verified before they login.
-* perform authorization where a user cannot alter the intellectual property of others.
-* save registration details and blog posts created at all times.
+*Ezzy Bank is a cutting-edge fintech API, crafted with precision using FastAPI and Python. Empowering seamless financial transactions, secure data handling, and rapid integration. Our API is designed to elivate your fintech solutions to new heights. Experiencing efficiency and reliability at its core as you embark on a finincial journey of unparalleled financial innovation with our robust FASTAPI-powered platform...
+<a href="https://github.com/mike-eziefule/CRUD-bank-app#readme" target="_blank">Read more</a>*
 
-##### Created in October 2023 for Altschool Africa
+
+##### Created in November 2023
 
     """
     TAGS = [
@@ -39,7 +35,7 @@ class Settings:
         'description': 'Transaction history route'
         },
         {'name': 'Admin',
-        'description': 'This is the Administrators routes, It was created to help me clear my database during testing'
+        'description': 'This is the Administrators routes, The first user to login becomes the admin'
         }
     ]
     

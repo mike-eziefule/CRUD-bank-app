@@ -4,13 +4,15 @@ from uuid import UUID
 
 
 class Log(BaseModel):
-    description: str = 'Over the counter cash withdrawal'
+    description: str = 'description'
     
 class Withdrawal(Log):
-    title:str = "Withdrawal"
+    title:str = "Over the counter Withdrawal "
     
 class deposit(Log):
-    title:str = "Cash deposit"
+    title:str = "Over the counter Cash deposit"
+class Transfer(Log):
+    title:str = "P2P Transfer"
 
 class ShowBlog(deposit):
     trans_id: UUID
