@@ -177,7 +177,7 @@ Python3: [Get Python](https://www.python.org/downloads/)
    ```
 3. Install project packages
    ```sh
-   pip install -r requirements.txt
+   pip install -r requirement.txt
    ```
 4. Run uvicorn
    ```sh
