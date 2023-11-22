@@ -79,47 +79,48 @@ Ezzy Bank is a cutting-edge fintech API, crafted with precision using FastAPI an
 secure data handling, and rapid integration. Our API is designed to elivate your fintech solutions to new heights. Experiencing efficiency
 and reliability at its core as you embark on a finincial journey of unparalleled financial innovation with our robust FASTAPI-powered platform.
 
+### Admin module:
+
+1. The first account to sign up on the app is automatically stored as the administrator.
+2. Once you have registered as an administrator, goto credit_admin routes to finance your bank(startup capital) 
+3. All other transaction would be charged to and from the admin account, hence your startup capitial should be robust.
+2. Admin accounts can only be deleted by the admin alone.
+3. Admin reserves the right to edit all users information except the users login email and password
+4. Admin user can perform the following actions:
+* deposit: funds are charged from admin account and credited to the user account,
+* withdrawal: funds are charged from user account and credited to the administrator account,
+* disable any user accounts: stop an account from transacting
+* enable any user accounts: allow an account transact
+* edit any user accounts: change user informations except account number, email and password
+* delete any user accounts.
+* view all transaction history or search transactions by transaction id
+* clear accumulated transaction history/log
+* reset Login password (set a new password entirely without the help of old password)
+
+5. All actions performed by the admin is captured in a LOG table and assigned a unique 32digits number(UUID) which can be used to track any transaction dispute.
 
 ### User module:
 
-1. New users can register with Ezzy Bank by filling in some information:
-    **upon registering, a new account number will be generated and added to your account
-    **provided email address and password will be needed to login/authentication.
-    **username and email will be unique hence, multiple accounts cannot have the same username and/or email.
+1. New users can register with Ezzy Bank by filling in some personal information:
+* upon registering, a new account number will be generated and added to your profile
+* provided email address and password will be needed to login/authentication.
+* user can view, edit and initiate transactions only when logged in
+* username and email will be unique hence, multiple accounts cannot have the same username and/or email.
 
-2. Registered users can:
-    -check balance, 
-    -transfer to other account holder,
-    -receive payment from other account holder
-    -check transaction history,
-    -block an account,
-    -edit some profile information
+2. Registered users can initiate the following transactions:
+* check balance, 
+* transfer to other account holder,
+* receive payment from other account holder
+* check transaction history,
+* block an account(but would require the admin to unfreeze it),
+* edit some profile information
+* change login password provided they remember the old password(note, if old password is forgotten, user must contact the admin to reset).
 
 3. Users can also make deposits or withdrawal by contacting the bank administrator (modelled here as over the counter staff)
 
-4. All actions(transfer, withdrawal, login, checking account balance) performed by any user is captured in a LOG table and assigned a 
-    unique 32digits number(UUID) which can be used to track any transaction dispute.
+4. All actions(transfer, withdrawal, login, checking account balance) performed by any user is captured in a LOG table and assigned a unique 32digits number(UUID) which can be used to track any transaction dispute.
 
-5.  When a account is blocked or inactive, any transfers or withdrawals made from that accout would br automatically reversed. and user is advised
-    to contact the administrator
-
-
-### Admin module:
-
-1. The first account to sign up on the app is automatically stored as the administrator
-2. Admin accounts can only be deleted by the software creator.
-3. Admin reserves the right to edit all users information except the users login email and password
-4. Admin user can perform the following actions:
-    -deposit: funds are charged from admin account and credited to the user account
-    -withdrawal: funds are charged from user account and credited to the administrator account
-    -disable any user accounts: stop an account from transacting
-    -enable any user accounts: allow an account transact
-    -edit any user accounts: change user informations except account number, email and password
-    -delete any user accounts except admin account.
-
-
-5. All actions performed by the admin is captured in a LOG table and assigned a unique 32digits number(UUID) which can be used to track 
-    any transaction dispute.
+5.  When a account is blocked or inactive, any transfers or withdrawals made from that accout would be automatically reversed. and user advised to contact the administrator
 
 ---
 
@@ -191,7 +192,7 @@ Python3: [Get Python](https://www.python.org/downloads/)
 1. his Api has been hosted on render.com To test, follow the link below.
 
    ```sh
-   https://ezzy-blog-api.onrender.com/docs
+   https://ezzy-bank.onrender.com/docs
    ```
 
 <p align="right"><a href="#readme-top">back to top</a></p>
@@ -227,7 +228,7 @@ Distributed under the MIT License. See <a href="https://github.com/mike-eziefule
 
 X [Formally Twitter] - [@EziefuleMichael](https://twitter.com/EziefuleMichael)
 
-Project Link: [Ezzy_Blog_api](https://github.com/mike-eziefule/CRUD-bank-app)
+Project Link: [Ezzy_Bank_api](https://github.com/mike-eziefule/CRUD-bank-app)
 
 Email Address: [mike.eziefule@gmail.com](mailto:mike-eziefule@gmail.com)
 

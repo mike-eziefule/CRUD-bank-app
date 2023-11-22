@@ -18,6 +18,7 @@ app = FastAPI(
     openapi_tags= setting.TAGS
 )
 
+#CORS Middleware
 origins = ["*"]
 
 app.add_middleware(
