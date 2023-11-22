@@ -15,7 +15,7 @@
 <!-- Project Logo -->
 <br />
 <div align="center">
-  <a href="https://github.com/mike-eziefule/Ezzy_Blog">
+  <a href="https://github.com/mike-eziefule/CRUD-bank-app">
     <img src="./images/Ezzybank.png" alt="Logo" width="80%" height="20%">
   </a>
 </div>
@@ -24,14 +24,14 @@
 
 <div>
   <p align="center">
-    <a href="https://github.com/mike-eziefule/Ezzy_Blog_api/blob/main/README.md"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/mike-eziefule/CRUD-bank-app/blob/main/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://www.loom.com/share/ed3cc4bfb8c743cd9371e2831a7785ec?sid=4be6af19-e752-4289-a180-bf065c0bd58a">View Demo</a>
     ·
-    <a href="https://github.com/mike-eziefule/Ezzy_Blog/issues">Report Bug</a>
+    <a href="https://github.com/mike-eziefule/CRUD-bank-app/issues">Report Bug</a>
     ·
-    <a href="https://github.com/mike-eziefule/Ezzy_Blog/issues">Request Feature</a>
+    <a href="https://github.com/mike-eziefule/CRUD-bank-app/issues">Request Feature</a>
   </p>
 </div
 ---
@@ -41,7 +41,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-Ezzy-blog">About Ezzy Bank API</a>
+      <a href="#about-CRUD-bank-app">About Ezzy Bank API</a>
       <ul>
         <li><a href="#user-module">User Module</a></li>
       </ul>
@@ -203,8 +203,9 @@ Python3: [Get Python](https://www.python.org/downloads/)
 
 <br />
 
-[![Ezzy blog screenshot pg1][Ezzy-blog-screenshot-pg1]](https://github.com/mike-eziefule/Ezzy_Blog_api/blob/main/images/ezzy_blogpage1.png)
-[![Ezzy blog screenshot pg2][Ezzy-blog-screenshot-pg2]](https://github.com/mike-eziefule/Ezzy_Blog_api/blob/main/images/ezzy_blogpage2.png)
+[![Ezzy bank screenshot pg1][Ezzy-bank-screenshot-pg1]](https://github.com/mike-eziefule/CRUD-bank-app/blob/main/images/images/ezzybvnk1.png)
+[![Ezzy bank screenshot pg2][Ezzy-bank-screenshot-pg2]](https://github.com/mike-eziefule/CRUD-bank-app/blob/main/images/images/ezzybvnk2.png)
+[![Ezzy bank screenshot pg3][Ezzy-bank-screenshot-pg2]](https://github.com/mike-eziefule/CRUD-bank-app/blob/main/images/images/ezzybvnk3.png)
 
 <br/>
 
@@ -262,8 +263,9 @@ This project was made possible by:
 [license-url]: https://github.com/mike-eziefule/CRUD-bank-app/blob/main/LICENSE
 [twitter-shield]: https://img.shields.io/twitter/follow/EziefuleMichael
 [twitter-url]: https://twitter.com/EziefuleMichael
-[Ezzy-blog-screenshot-pg1]:images/ezzy_blogpage1.png
-[Ezzy-blog-screenshot-pg2]:images/ezzy_blogpage2.png
+[Ezzy-bank-screenshot-pg1]:images/ezzybvnk1.png
+[Ezzy-bank-screenshot-pg2]:images/ezzybvnk2.png
+[Ezzy-bank-screenshot-pg2]:images/ezzybvnk3.png
 [python]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [fastapi]: https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=black
 [sqlite]: https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white
