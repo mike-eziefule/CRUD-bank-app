@@ -84,37 +84,37 @@ and reliability at its core as you embark on a finincial journey of unparalleled
 1. The first account to sign up on the app is automatically stored as the administrator.
 2. Once you have registered as an administrator, goto credit_admin routes to finance your bank(startup capital) 
 3. All other transaction would be charged to and from the admin account, hence your startup capitial should be robust.
-2. Admin accounts can only be deleted by the admin alone.
-3. Admin reserves the right to edit all users information except the users login email and password
-4. Admin user can perform the following actions:
-* deposit: funds are charged from admin account and credited to the user account,
-* withdrawal: funds are charged from user account and credited to the administrator account,
-* disable any user accounts: stop an account from transacting
-* enable any user accounts: allow an account transact
-* edit any user accounts: change user informations except account number, email and password
-* delete any user accounts.
-* view all transaction history or search transactions by transaction id
-* clear accumulated transaction history/log
-* reset Login password (set a new password entirely without the help of old password)
+4. Admin accounts can only be deleted by the admin alone.
+5. Admin reserves the right to edit all users information except the users login email and password
+6. Admin user can perform the following actions:
+  * deposit: funds are charged from admin account and credited to the user account,
+  * withdrawal: funds are charged from user account and credited to the administrator account,
+  * disable any user accounts: stop an account from transacting
+  * enable any user accounts: allow an account transact
+  * edit any user accounts: change user informations except account number, email and password
+  * delete any user accounts.
+  * view all transaction history or search transactions by transaction id
+  * clear accumulated transaction history/log
+  * reset Login password (set a new password entirely without the help of old password)
 
 5. All actions performed by the admin is captured in a LOG table and assigned a unique 32digits number(UUID) which can be used to track any transaction dispute.
 
 ### User module:
 
 1. New users can register with Ezzy Bank by filling in some personal information:
-* upon registering, a new account number will be generated and added to your profile
-* provided email address and password will be needed to login/authentication.
-* user can view, edit and initiate transactions only when logged in
-* username and email will be unique hence, multiple accounts cannot have the same username and/or email.
+  * upon registering, a new account number will be generated and added to your profile.
+  * provided email address and password will be needed to login.
+  * user can view, edit and initiate transactions only when logged in
+  * username and email will be unique hence, multiple accounts cannot have the same username and/or email.
 
-2. Registered users can initiate the following transactions:
-* check balance, 
-* transfer to other account holder,
-* receive payment from other account holder
-* check transaction history,
-* block an account(but would require the admin to unfreeze it),
-* edit some profile information
-* change login password provided they remember the old password(note, if old password is forgotten, user must contact the admin to reset).
+2. Registered users can initiate the following transactions on their account:
+  * check balance, 
+  * transfer to other account holder,
+  * receive payment from other account holder
+  * check transaction history,
+  * block account(stop account from transacting),
+  * edit some profile information
+  * change login password provided they remember the old password(note, if old password is forgotten, user must contact the admin to reset).
 
 3. Users can also make deposits or withdrawal by contacting the bank administrator (modelled here as over the counter staff)
 
@@ -193,7 +193,7 @@ Python3: [Get Python](https://www.python.org/downloads/)
 
    ```sh
    https://ezzy-bank.onrender.com/docs
-   
+
    ```
 
 <p align="right"><a href="#readme-top">back to top</a></p>
@@ -243,7 +243,7 @@ Email Address: [mike.eziefule@gmail.com](mailto:mike-eziefule@gmail.com)
 This project was made possible by:
 
 * [AltSchool Africa School of Engineering](https://engineering.altschoolafrica.com/)
-* [Caleb Emelike's FastAAPI Lessons](https://github.com/CalebEmelike)
+* [Caleb Emelike's FastAPI Lessons](https://github.com/CalebEmelike)
 * [GitHub Student Pack](https://education.github.com/globalcampus/student)
 * [Canva](https://www.canva.com/)
 * [Stack Overflow](https://stackoverflow.com/)
